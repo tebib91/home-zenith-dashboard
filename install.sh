@@ -388,10 +388,10 @@ Install_Addons() {
 Configuration_Addons() {
   log_message "INFO" "${BLUE}Configuring addons...${NC}"
 
-  cd home-zenith-dashboard || {
-    log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
-    exit 1
-  }
+  # cd home-zenith-dashboard || {
+  #   log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
+  #   exit 1
+  # }
 
   # Configure backend environment
   cd backend || {
@@ -426,10 +426,11 @@ Configuration_Addons() {
 Install_ZenithOs() {
   log_message "INFO" "${BLUE}Installing ZenithOS...${NC}"
 
-  cd home-zenith-dashboard || {
-    log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
-    exit 1
-  }
+
+  # cd home-zenith-dashboard || {
+  #   log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
+  #   exit 1
+  # }
 
   # Build frontend
   log_message "INFO" "Building frontend..."
@@ -461,6 +462,7 @@ Generate_Service() {
     log_message "INFO" "${YELLOW}Service generation is only supported on Linux${NC}"
     return 0
   fi
+  log_message "INFO" "${BLUE}Current directory: $(pwd)${NC}"
 
   cd home-zenith-dashboard/backend || {
     log_message "ERROR" "${RED}Backend directory not found${NC}"
@@ -498,6 +500,7 @@ EOL
 # Function to start ZenithOS
 Start_ZenithOs() {
   log_message "INFO" "${BLUE}Starting ZenithOS...${NC}"
+  log_message "INFO" "${BLUE}Current directory: $(pwd)${NC}"
 
   cd home-zenith-dashboard/backend || {
     log_message "ERROR" "${RED}Backend directory not found${NC}"
