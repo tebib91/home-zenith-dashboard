@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { PowerOff, Reboot, Activity } from 'lucide-react';
+import { PowerOff, RotateCw, Activity } from 'lucide-react';
 import { toast } from 'sonner';
 
 const PowerControls = () => {
@@ -32,7 +32,7 @@ const PowerControls = () => {
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant="outline" className="flex items-center gap-2">
-            <Reboot size={16} />
+            <RotateCw size={16} />
             <span>Reboot</span>
           </Button>
         </AlertDialogTrigger>
