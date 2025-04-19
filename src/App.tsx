@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
 import AuthGuard from "./components/auth/AuthGuard";
+import Widgets from "./pages/Widgets";
 
 const queryClient = new QueryClient();
 
@@ -37,9 +38,13 @@ const App = () => (
           >
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/apps" element={<Apps />} />
+            <Route path="/widgets" element={<Widgets />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
+          
+          {/* Redirect /dashboard to / when authenticated */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           
           {/* Catch-all route */}
           <Route path="*" element={<NotFound />} />
