@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { 
@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import logo from '../../assets/logo.svg';
+import { useToast } from '@/hooks/use-toast';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -29,6 +30,8 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   
   const closeSidebar = () => {
     if (isMobile) {
@@ -45,16 +48,37 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   ];
 
   const widgetItems = [
-    { icon: <Battery size={20} />, label: 'Battery' },
-    { icon: <Network size={20} />, label: 'Network' },
-    { icon: <HardDrive size={20} />, label: 'Storage' },
-    { icon: <Cpu size={20} />, label: 'CPU & RAM' },
-    { icon: <Thermometer size={20} />, label: 'Temperature' },
-    { icon: <Clock size={20} />, label: 'Date & Time' },
-    { icon: <Cloud size={20} />, label: 'Weather' },
-    { icon: <Dock size={20} />, label: 'Docker' },
-    { icon: <Link size={20} />, label: 'Links' },
+    { id: 'battery', icon: <Battery size={20} />, label: 'Battery' },
+    { id: 'network', icon: <Network size={20} />, label: 'Network' },
+    { id: 'storage', icon: <HardDrive size={20} />, label: 'Storage' },
+    { id: 'cpu-ram', icon: <Cpu size={20} />, label: 'CPU & RAM' },
+    { id: 'temperature', icon: <Thermometer size={20} />, label: 'Temperature' },
+    { id: 'datetime', icon: <Clock size={20} />, label: 'Date & Time' },
+    { id: 'weather', icon: <Cloud size={20} />, label: 'Weather' },
+    { id: 'docker', icon: <Dock size={20} />, label: 'Docker' },
+    { id: 'links', icon: <Link size={20} />, label: 'Links' },
   ];
+
+  const handleAddWidget = (widgetId: string) => {
+    // First, navigate to dashboard if not already there
+    navigate('/dashboard');
+    
+    // Create widget event for WidgetGrid to handle
+    const event = new CustomEvent('add-widget', { 
+      detail: { widgetType: widgetId }
+    });
+    document.dispatchEvent(event);
+    
+    // Show toast notification
+    toast({
+      title: "Widget Added",
+      description: `${widgetId.charAt(0).toUpperCase() + widgetId.slice(1)} widget has been added to your dashboard`,
+      variant: "default",
+    });
+    
+    // Close sidebar on mobile
+    closeSidebar();
+  };
 
   return (
     <>
@@ -112,9 +136,10 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             </div>
             <ul className="space-y-1 px-2">
               {widgetItems.map((item) => (
-                <li key={item.label} className="group">
+                <li key={item.id} className="group">
                   <button 
                     className="flex items-center w-full gap-3 px-3 py-2 rounded-md text-sidebar-foreground/80 hover:bg-sidebar-accent/50 transition-all duration-200 group-hover:text-primary"
+                    onClick={() => handleAddWidget(item.id)}
                   >
                     {item.icon}
                     <span>{item.label}</span>
