@@ -1,8 +1,8 @@
 
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Cpu, HardDrive, Activity } from 'lucide-react';
+import { Activity, Cpu, HardDrive } from 'lucide-react';
+import React from 'react';
 
 interface SystemStatProps {
   icon: React.ReactNode;
@@ -15,7 +15,7 @@ interface SystemStatProps {
 
 const SystemStat = ({ icon, title, value, maxValue, unit, color }: SystemStatProps) => {
   const percentage = Math.round((value / maxValue) * 100);
-  
+
   return (
     <Card className="bg-card/80 backdrop-blur-sm border-border/50">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -28,9 +28,9 @@ const SystemStat = ({ icon, title, value, maxValue, unit, color }: SystemStatPro
         <div className="text-2xl font-bold">
           {value} <span className="text-muted-foreground text-sm">{unit}</span>
         </div>
-        <Progress 
-          value={percentage} 
-          className="h-1.5 mt-3" 
+        <Progress
+          value={percentage}
+          className="h-1.5 mt-3"
           indicatorClassName={color.replace('bg-', 'bg-')}
         />
         <div className="mt-1 text-xs text-muted-foreground">{percentage}% used</div>
@@ -69,7 +69,7 @@ const SystemStats = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-rows-1 md:grid-rows-3 gap-4">
       {stats.map((stat, index) => (
         <SystemStat key={index} {...stat} />
       ))}

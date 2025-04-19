@@ -1,9 +1,9 @@
 
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { MoreVertical } from 'lucide-react';
+import React from 'react';
 
 interface BaseWidgetProps {
   title: string;
@@ -26,7 +26,7 @@ const BaseWidget = ({
 }: BaseWidgetProps) => {
   return (
     <Card className={`overflow-hidden transition-all duration-200 ${className}`}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2 pt-3">
+      <CardHeader className="flex flex-row items-center justify-between pb-1 pt-2">
         <div className="flex items-center gap-2">
           {icon}
           <CardTitle className="text-sm font-medium">{title}</CardTitle>
@@ -49,7 +49,7 @@ const BaseWidget = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>
-      <CardContent className="pb-3">
+      <CardContent className="pb-1">
         {children}
       </CardContent>
     </Card>

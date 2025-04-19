@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import CpuRamWidget from '../widgets/CpuRamWidget';
-import NetworkWidget from '../widgets/NetworkWidget';
-import BatteryWidget from '../widgets/BatteryWidget';
-import TemperatureWidget from '../widgets/TemperatureWidget';
-import WeatherWidget from '../widgets/WeatherWidget';
-import DockerWidget from '../widgets/DockerWidget';
-import LinksWidget from '../widgets/LinksWidget';
-import { PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
+import { PlusCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import BatteryWidget from '../widgets/BatteryWidget';
+import CpuRamWidget from '../widgets/CpuRamWidget';
+import DockerWidget from '../widgets/DockerWidget';
+import LinksWidget from '../widgets/LinksWidget';
+import NetworkWidget from '../widgets/NetworkWidget';
+import TemperatureWidget from '../widgets/TemperatureWidget';
+import WeatherWidget from '../widgets/WeatherWidget';
 
 type WidgetType = 'cpu-ram' | 'network' | 'battery' | 'storage' | 'temperature' | 'datetime' | 'weather' | 'docker' | 'links';
 
@@ -23,9 +23,9 @@ const WidgetGrid = () => {
     { id: 'cpu-ram-1', type: 'cpu-ram' },
     { id: 'network-1', type: 'network' }
   ]);
-  
+
   const { toast } = useToast();
-  
+
   const removeWidget = (id: string) => {
     setWidgets(widgets.filter(widget => widget.id !== id));
     toast({
@@ -34,7 +34,7 @@ const WidgetGrid = () => {
       variant: "default",
     });
   };
-  
+
   const addWidget = (type: WidgetType) => {
     const newId = `${type}-${Date.now()}`;
     setWidgets([...widgets, { id: newId, type }]);
@@ -44,20 +44,20 @@ const WidgetGrid = () => {
       variant: "default",
     });
   };
-  
+
   useEffect(() => {
     const handleAddWidgetEvent = (event: CustomEvent) => {
       const { widgetType } = event.detail;
       addWidget(widgetType as WidgetType);
     };
-    
+
     document.addEventListener('add-widget', handleAddWidgetEvent as EventListener);
-    
+
     return () => {
       document.removeEventListener('add-widget', handleAddWidgetEvent as EventListener);
     };
   }, [widgets]);
-  
+
   const renderWidget = (widget: WidgetItem) => {
     switch (widget.type) {
       case 'cpu-ram':
@@ -78,7 +78,7 @@ const WidgetGrid = () => {
         return null;
     }
   };
-  
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -129,8 +129,8 @@ const WidgetGrid = () => {
           </SheetContent>
         </Sheet>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <div className="grid grid-rows-1 md:grid-rows-2 lg:grid-rows-3 gap-4">
         {widgets.map(renderWidget)}
       </div>
     </div>
