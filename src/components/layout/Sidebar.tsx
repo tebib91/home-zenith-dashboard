@@ -15,7 +15,7 @@ import {
   Cpu,
   Thermometer,
   Cloud,
-  Docker,
+  Dock,
   Link,
   Battery
 } from 'lucide-react';
@@ -52,7 +52,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     { icon: <Thermometer size={20} />, label: 'Temperature' },
     { icon: <Clock size={20} />, label: 'Date & Time' },
     { icon: <Cloud size={20} />, label: 'Weather' },
-    { icon: <Docker size={20} />, label: 'Docker' },
+    { icon: <Dock size={20} />, label: 'Docker' },
     { icon: <Link size={20} />, label: 'Links' },
   ];
 

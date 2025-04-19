@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Battery, Network, HardDrive, Cpu, Thermometer, Clock, Cloud, Docker, Link, Music } from 'lucide-react';
+import { Battery, Network, HardDrive, Cpu, Thermometer, Clock, Cloud, Dock, Link, Music } from 'lucide-react';
 
 interface WidgetItem {
   id: string;
@@ -78,7 +77,7 @@ const Widgets = () => {
       id: 'docker',
       name: 'Docker Status',
       description: 'Container status and resource usage',
-      icon: <Docker className="h-10 w-10 text-primary" />,
+      icon: <Dock className="h-10 w-10 text-primary" />,
       category: 'system',
       enabled: true
     },
