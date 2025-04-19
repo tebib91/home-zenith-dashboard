@@ -30,19 +30,20 @@ command_exists() {
 
 # Function to confirm uninstallation
 Confirm_Uninstall() {
-  log_message "WARNING" "⚠️  This will completely remove ZenithOS from your system!"
-  log_message "WARNING" "⚠️  All data and configurations will be lost."
+  log_message "WARNING" "${YELLOW}This will completely remove ZenithOS from your system!${NC}"
+  log_message "WARNING" "${YELLOW}All data and configurations will be lost.${NC}"
 
-  echo -n "❓ Are you sure you want to uninstall ZenithOS? (y/n): "
-  read answer
-
-  if [[ ! "$answer" =~ ^[Yy]$ ]]; then
-    log_message "INFO" "❌ Uninstallation cancelled by user"
+  # Make sure to use proper read command that waits for input
+  read -p  "Are you sure you want to uninstall ZenithOS? (y/n): " REPLY
+  echo
+  # Check the reply correctly
+  if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+    log_message "INFO" "${GREEN}Uninstallation cancelled by user${NC}"
     exit 0
   fi
 
-  log_message "INFO" "✅ Proceeding with uninstallation..."
-  # uninstall logic here...
+  # If we get here, user confirmed
+  return 0
 }
 
 # Function to stop ZenithOS services
@@ -160,7 +161,7 @@ main() {
   log_message "INFO" "${GREEN}Starting ZenithOS uninstallation...${NC}"
 
   # Step 1: Confirm uninstallation
-  Confirm_Uninstall
+  # Confirm_Uninstall
 
   # Step 2: Stop ZenithOS services
   Stop_ZenithOs

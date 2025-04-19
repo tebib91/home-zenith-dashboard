@@ -100,7 +100,7 @@ Check_Distribution() {
         ;;
       *)
         log_message "WARNING" "${YELLOW}Distribution: $PRETTY_NAME - Untested${NC}"
-        read -p "Continue with installation? (y/n): " -n 1 -r
+        read -p "Continue with installation? (y/n): " -n 1 -r REPLY
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
           log_message "ERROR" "${RED}Installation aborted by user${NC}"
@@ -344,7 +344,7 @@ Download_zenithOs() {
   log_message "INFO" "${BLUE}Downloading ZenithOS...${NC}"
 
   # Clone the repository
-  git clone https://github.com/tebib91/home-zenith-dashboard.git/tree/dev >> "$LOG_FILE" 2>&1 || {
+  git clone https://github.com/tebib91/home-zenith-dashboard.git >> "$LOG_FILE" 2>&1 || {
     log_message "ERROR" "${RED}Failed to download ZenithOS${NC}"
     exit 1
   }
