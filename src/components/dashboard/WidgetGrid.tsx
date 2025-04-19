@@ -1,7 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import CpuRamWidget from '../widgets/CpuRamWidget';
 import NetworkWidget from '../widgets/NetworkWidget';
+import BatteryWidget from '../widgets/BatteryWidget';
+import TemperatureWidget from '../widgets/TemperatureWidget';
+import WeatherWidget from '../widgets/WeatherWidget';
+import DockerWidget from '../widgets/DockerWidget';
+import LinksWidget from '../widgets/LinksWidget';
 import { PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -41,7 +45,6 @@ const WidgetGrid = () => {
     });
   };
   
-  // Listen for custom events from sidebar
   useEffect(() => {
     const handleAddWidgetEvent = (event: CustomEvent) => {
       const { widgetType } = event.detail;
@@ -62,19 +65,15 @@ const WidgetGrid = () => {
       case 'network':
         return <NetworkWidget key={widget.id} onRemove={() => removeWidget(widget.id)} />;
       case 'battery':
-        return <PlaceholderWidget key={widget.id} title="Battery" onRemove={() => removeWidget(widget.id)} />;
-      case 'storage':
-        return <PlaceholderWidget key={widget.id} title="Storage" onRemove={() => removeWidget(widget.id)} />;
+        return <BatteryWidget key={widget.id} onRemove={() => removeWidget(widget.id)} />;
       case 'temperature':
-        return <PlaceholderWidget key={widget.id} title="Temperature" onRemove={() => removeWidget(widget.id)} />;
-      case 'datetime':
-        return <PlaceholderWidget key={widget.id} title="Date & Time" onRemove={() => removeWidget(widget.id)} />;
+        return <TemperatureWidget key={widget.id} onRemove={() => removeWidget(widget.id)} />;
       case 'weather':
-        return <PlaceholderWidget key={widget.id} title="Weather" onRemove={() => removeWidget(widget.id)} />;
+        return <WeatherWidget key={widget.id} onRemove={() => removeWidget(widget.id)} />;
       case 'docker':
-        return <PlaceholderWidget key={widget.id} title="Docker Status" onRemove={() => removeWidget(widget.id)} />;
+        return <DockerWidget key={widget.id} onRemove={() => removeWidget(widget.id)} />;
       case 'links':
-        return <PlaceholderWidget key={widget.id} title="Quick Links" onRemove={() => removeWidget(widget.id)} />;
+        return <LinksWidget key={widget.id} onRemove={() => removeWidget(widget.id)} />;
       default:
         return null;
     }
@@ -133,29 +132,6 @@ const WidgetGrid = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {widgets.map(renderWidget)}
-      </div>
-    </div>
-  );
-};
-
-// Placeholder widget for types that don't have a full implementation yet
-interface PlaceholderWidgetProps {
-  title: string;
-  onRemove: () => void;
-}
-
-const PlaceholderWidget = ({ title, onRemove }: PlaceholderWidgetProps) => {
-  return (
-    <div className="bg-card rounded-lg border border-border shadow-sm overflow-hidden">
-      <div className="p-4 flex justify-between items-center border-b border-border">
-        <h3 className="font-medium">{title}</h3>
-        <Button variant="ghost" size="sm" onClick={onRemove} className="h-8 w-8 p-0">
-          ×
-        </Button>
-      </div>
-      <div className="p-4 flex flex-col items-center justify-center min-h-[150px] text-muted-foreground">
-        <p>This widget is coming soon</p>
-        <p className="text-sm">Widget implementation in progress</p>
       </div>
     </div>
   );
