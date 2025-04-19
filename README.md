@@ -71,3 +71,42 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Installation with install.sh
+
+ZenithOS provides an automated installation script to simplify setup. This script will check your system, install dependencies, and configure everything for you.
+
+### Prerequisites
+- Supported OS: Linux (full support), macOS (limited support)
+- Minimum: 1GB RAM, 5GB disk space
+- Required: curl, wget, git, nodejs, npm, Docker, Docker Compose (the script will attempt to install these on Linux)
+
+### Usage
+1. Download or clone this repository.
+2. Open a terminal in the project directory.
+3. Make the script executable (if needed):
+   ```sh
+   chmod +x install.sh
+   ```
+4. Run the installer:
+   ```sh
+   ./install.sh
+   ```
+
+The script will:
+- Check your system architecture, OS, and resources
+- Install required dependencies (Linux only)
+- Install or verify Docker and Docker Compose
+- Download the latest ZenithOS code
+- Install frontend and backend dependencies
+- Configure environment variables
+- Build the project
+- Set up and start the service (systemd on Linux, Docker Compose otherwise)
+
+Follow any prompts during installation. At the end, you will see access URLs for the dashboard and API.
+
+### Troubleshooting
+- For macOS, some features may be limited and you may need to install dependencies manually.
+- Check `/tmp/zenith-install.log` for detailed logs if you encounter issues.
+
+For uninstallation, see `uninstall.sh`.

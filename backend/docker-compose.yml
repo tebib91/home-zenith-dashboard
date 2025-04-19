@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:14-alpine
+    container_name: homezenith-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: homezenith
+      POSTGRES_PASSWORD: homezenith
+      POSTGRES_DB: homezenith
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - homezenith-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U homezenith"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Server
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: homezenith-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: homezenith
+      DB_USER: homezenith
+      DB_PASSWORD: homezenith
+      SYSTEM_METRICS_INTERVAL: 5000
+      NETWORK_METRICS_INTERVAL: 10000
+    ports:
+      - "3000:3000"
+    networks:
+      - homezenith-network
+    volumes:
+      - ./:/app
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  homezenith-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
