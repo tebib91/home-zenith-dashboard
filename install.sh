@@ -464,7 +464,7 @@ Generate_Service() {
   fi
   log_message "INFO" "${BLUE}Current directory: $(pwd)${NC}"
 
-  cd home-zenith-dashboard/backend || {
+  cd backend || {
     log_message "ERROR" "${RED}Backend directory not found${NC}"
     exit 1
   }
@@ -502,10 +502,10 @@ Start_ZenithOs() {
   log_message "INFO" "${BLUE}Starting ZenithOS...${NC}"
   log_message "INFO" "${BLUE}Current directory: $(pwd)${NC}"
 
-  cd home-zenith-dashboard/backend || {
-    log_message "ERROR" "${RED}Backend directory not found${NC}"
-    exit 1
-  }
+  # cd home-zenith-dashboard/backend || {
+  #   log_message "ERROR" "${RED}Backend directory not found${NC}"
+  #   exit 1
+  # }
 
   if [ "$(uname -s)" = "Linux" ] && [ -f "/etc/systemd/system/zenith.service" ]; then
     # Enable and start the service
