@@ -100,7 +100,7 @@ Check_Distribution() {
         ;;
       *)
         log_message "WARNING" "${YELLOW}Distribution: $PRETTY_NAME - Untested${NC}"
-        read -p "Continue with installation? (y/n): " -n 1 -r
+        read -p "Continue with installation? (y/n): " -n 1 -r REPLY
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
           log_message "ERROR" "${RED}Installation aborted by user${NC}"
@@ -344,7 +344,7 @@ Download_zenithOs() {
   log_message "INFO" "${BLUE}Downloading ZenithOS...${NC}"
 
   # Clone the repository
-  git clone https://github.com/tebib91/home-zenith-dashboard.git/tree/dev >> "$LOG_FILE" 2>&1 || {
+  git clone https://github.com/tebib91/home-zenith-dashboard.git >> "$LOG_FILE" 2>&1 || {
     log_message "ERROR" "${RED}Failed to download ZenithOS${NC}"
     exit 1
   }
@@ -388,10 +388,10 @@ Install_Addons() {
 Configuration_Addons() {
   log_message "INFO" "${BLUE}Configuring addons...${NC}"
 
-  cd home-zenith-dashboard || {
-    log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
-    exit 1
-  }
+  # cd home-zenith-dashboard || {
+  #   log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
+  #   exit 1
+  # }
 
   # Configure backend environment
   cd backend || {
@@ -426,10 +426,11 @@ Configuration_Addons() {
 Install_ZenithOs() {
   log_message "INFO" "${BLUE}Installing ZenithOS...${NC}"
 
-  cd home-zenith-dashboard || {
-    log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
-    exit 1
-  }
+
+  # cd home-zenith-dashboard || {
+  #   log_message "ERROR" "${RED}ZenithOS directory not found${NC}"
+  #   exit 1
+  # }
 
   # Build frontend
   log_message "INFO" "Building frontend..."
@@ -461,8 +462,9 @@ Generate_Service() {
     log_message "INFO" "${YELLOW}Service generation is only supported on Linux${NC}"
     return 0
   fi
+  log_message "INFO" "${BLUE}Current directory: $(pwd)${NC}"
 
-  cd home-zenith-dashboard/backend || {
+  cd backend || {
     log_message "ERROR" "${RED}Backend directory not found${NC}"
     exit 1
   }
@@ -498,11 +500,12 @@ EOL
 # Function to start ZenithOS
 Start_ZenithOs() {
   log_message "INFO" "${BLUE}Starting ZenithOS...${NC}"
+  log_message "INFO" "${BLUE}Current directory: $(pwd)${NC}"
 
-  cd home-zenith-dashboard/backend || {
-    log_message "ERROR" "${RED}Backend directory not found${NC}"
-    exit 1
-  }
+  # cd home-zenith-dashboard/backend || {
+  #   log_message "ERROR" "${RED}Backend directory not found${NC}"
+  #   exit 1
+  # }
 
   if [ "$(uname -s)" = "Linux" ] && [ -f "/etc/systemd/system/zenith.service" ]; then
     # Enable and start the service
